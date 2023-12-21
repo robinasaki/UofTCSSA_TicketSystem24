@@ -1,6 +1,6 @@
 package entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Random;
 
 public class Ticket {
@@ -11,16 +11,19 @@ public class Ticket {
      */
     private String buyerName; // Chenxu Mao
     private String email; // Robin.mao@mail.utoronto.ca
-    private LocalDateTime purchaseDate; // 2023.12.20
-    private String ticketID; // #TODO: ticketID
-
+    private LocalDate purchaseDate; // 2023.12.20
+    private String seat; // A1
+    private String cell; // xxx-xxx-xxxx
+    private String ticketID; //
     private Random random = new Random();
 
-    public Ticket(String buyerName, String email, LocalDateTime purchaseDate) {
+    public Ticket(String buyerName, String email, String seat, String cell, LocalDate purchaseDate) {
         this.buyerName = buyerName;
         this.email = email;
         this.purchaseDate = purchaseDate;
-        // TODO: confirm the ticketID
+        this.seat = seat;
+        this.cell = cell;
+        // TODO: confirm the ticketID algorithm
         this.ticketID = "CSSA24-" + random.nextInt(9) + random.nextInt(9) + random.nextInt(9) +
                 random.nextInt(9) + (char) (random.nextInt(26) + 'A') +
                 random.nextInt(9) + (char) (random.nextInt(26) + 'A') + (char) (random.nextInt(26) + 'A') +
@@ -31,7 +34,7 @@ public class Ticket {
         return this.buyerName;
     }
 
-    public LocalDateTime getPurchaseDate() {
+    public LocalDate getPurchaseDate() {
         return this.purchaseDate;
     }
 
@@ -41,5 +44,13 @@ public class Ticket {
 
     public String getEmail() {
         return this.email;
+    }
+
+    public String getSeat() {
+        return this.seat;
+    }
+
+    public String getCell() {
+        return this.cell;
     }
 }
