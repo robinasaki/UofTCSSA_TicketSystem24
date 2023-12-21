@@ -1,6 +1,7 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
+import view.RegisterView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -19,7 +20,11 @@ public class Main {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
 
+        // set the default page as register
         viewManagerModel.setActiveView("register");
+
+        RegisterView registerView = ViewFactory.createRegisterView();
+        views.add(registerView, RegisterView.VIEW_NAME);
 
         application.pack();
         application.setVisible(true);
