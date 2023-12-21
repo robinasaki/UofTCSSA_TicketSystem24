@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         JFrame application = new JFrame("UTCSSA24 Registration Sytm");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        application.setPreferredSize(new Dimension(600, 800));
+        application.setPreferredSize(new Dimension(600, 1000));
 
         CardLayout cardLayout = new CardLayout();
         JPanel views = new JPanel(cardLayout);
