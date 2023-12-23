@@ -12,4 +12,20 @@ public class RegisterInputData {
         this.seat = seat;
         this.cell = cell;
     }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public String getSeat() {
+        return this.seat;
+    }
+
+    public String getCell() {
+        return this.cell;
+    }
 }

@@ -10,7 +10,7 @@ public class EmailFilter extends DocumentFilter {
      */
     @Override
     public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-        if (string.matches("[a-zA-Z@\\.]*")) {
+        if (string.matches("[a-z\\dA-Z@\\.]*")) {
             super.insertString(fb, offset, string, attr);
         }
     }
@@ -18,7 +18,7 @@ public class EmailFilter extends DocumentFilter {
     @Override
     public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
             throws BadLocationException {
-        if (text.matches("[a-zA-Z@\\.]*")) {
+        if (text.matches("[a-z\\dA-Z@\\.]*")) {
             super.replace(fb, offset, length, text, attrs);
         }
     }

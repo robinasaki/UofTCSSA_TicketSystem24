@@ -1,4 +1,7 @@
 package use_case.register;
 
-public class RegisterInputBoundary {
+import Exceptions.DuplicateNameException;
+
+public interface RegisterInputBoundary {
+    void execute(RegisterInputData registerInputData) throws DuplicateNameException;
 }
