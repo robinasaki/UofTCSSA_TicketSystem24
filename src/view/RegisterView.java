@@ -20,7 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class RegisterView extends JPanel {
-    public final static String BYPASS_CODE = "SunshineJeremy";
+    public final static String BYPASS_CODE = "RobinLoveDVD";
     public final static String VIEW_NAME = "register";
     private String FORMATTING_NOTICE = "<html> <p style='color: gray;'>" + "FirstName: robin<br/>LastName: mao<br/>email: robin.mao@mail.utoronto.ca<br/>Seat: A1<br/>Phone Number: 647-268-9505" + " </p> </html>";
     private JPanel panel;
@@ -104,7 +104,7 @@ public class RegisterView extends JPanel {
             if (firstNameField.getText().isEmpty() || lastNameField.getText().isEmpty() || emailField.getText().isEmpty() || seatField.getText().isEmpty() || cellField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(panel, "Empty field(s).", "Warning: empty fields", JOptionPane.WARNING_MESSAGE);
             } else {
-                RegisterInputData registerInputData = new RegisterInputData(firstNameField.getName(), lastNameField.getName(), emailField.getText(), seatField.getText(), cellField.getText());
+                RegisterInputData registerInputData = new RegisterInputData(firstNameField.getText(), lastNameField.getText(), emailField.getText(), seatField.getText(), cellField.getText());
                 try {
                     registerInteractor.execute(registerInputData);
                 } catch (Exception exception) {

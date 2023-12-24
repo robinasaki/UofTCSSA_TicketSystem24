@@ -21,7 +21,7 @@ public class RegisterInteractor implements RegisterInputBoundary {
     @Override
     public void execute(RegisterInputData registerInputData) throws IllegalArgumentException, DuplicateNameException {
         // 1. check for violations
-        // if (!registerInputData.getFirstName().equals(RegisterView.BYPASS_CODE)) {
+         if (!registerInputData.getFirstName().equals(RegisterView.BYPASS_CODE)) {
             // 1.1: seat
             // seat input should follow A1 or A11
             if (!registerInputData.getSeat().matches("^[A-Z]\\d{1,2}")) {
@@ -39,7 +39,7 @@ public class RegisterInteractor implements RegisterInputBoundary {
             else if (!registerInputData.getEmail().matches("^.*@.*\\..*")) {
                 throw new IllegalArgumentException("Incorrect email input.");
             }
-        // }
+         }
          else {
             // 2. make the data a Ticket object
             ZoneId zoneId = ZoneId.of("America/New_York");
@@ -50,11 +50,12 @@ public class RegisterInteractor implements RegisterInputBoundary {
             try {
                 fileDataAccessObject.saveTicket(ticket);
             } catch (DuplicateNameException e) {
-                e.printStackTrace();
+                throw new DuplicateNameException("Warning: duplicate name");
             }
 
             // 4. output the Ticket
             RegisterOutputData registerOutputData = new RegisterOutputData(ticket);
+            registerPresenter.prepareSuccessView(registerOutputData);
         }
 
     }
