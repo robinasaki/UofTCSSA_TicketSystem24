@@ -4,6 +4,7 @@ import Exceptions.DuplicateNameException;
 import entity.Ticket;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,18 +12,36 @@ public class FileDataAccessObject {
     private static final String FILE_PATH = "tickets.csv";
 
     public static List<Ticket> loadTickets() {
-        /**
-         * load all tickets in set
-         */
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
-            return (List<Ticket>) ois.readObject();
+        List<Ticket> ticketList = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                // Assuming your Ticket class has a constructor that takes the necessary fields
+                Ticket ticket = new Ticket(parts[0], parts[1], parts[2], parts[3], LocalDate.parse(parts[4]));
+                ticketList.add(ticket);
+            }
         } catch (FileNotFoundException e) {
-            return new ArrayList<>();
-        } catch (IOException | ClassNotFoundException e) {
+            // Handle file not found
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return new ArrayList<>();
+        return ticketList;
     }
+
+//    public static List<Ticket> loadTickets() {
+//        /**
+//         * load all tickets in set
+//         */
+//        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
+//            return (List<Ticket>) ois.readObject();
+//        } catch (FileNotFoundException e) {
+//            return new ArrayList<>();
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        return new ArrayList<>();
+//    }
 
     public void saveTicket(Ticket ticket) throws DuplicateNameException {
         /**
@@ -31,8 +50,9 @@ public class FileDataAccessObject {
 
         List<Ticket> ticketList = loadTickets();
         for (int i = 0; i < ticketList.size(); i++) {
-            if (ticketList.get(i).getBuyerName().equals(ticket.getBuyerName())) {
-                throw new DuplicateNameException("Warning: duplicate name found.");
+            // policy: no duplicate seat.
+            if (ticketList.get(i).getSeat().equals(ticket.getSeat())) {
+                throw new DuplicateNameException("Warning: seat already taken.");
             }
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
@@ -44,14 +64,12 @@ public class FileDataAccessObject {
         }
     }
 
-    public void saveTickets(List<Ticket> ticketList) {
+    public void saveTickets(List<Ticket> ticketList) throws DuplicateNameException {
         /**
          * save some tickets
          */
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
-            oos.writeObject(ticketList);
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (Ticket ticket: ticketList) {
+            saveTicket(ticket);
         }
     }
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Random;
 
-public class Ticket {
+public class Ticket implements Serializable{
     /**
      * @Param: buyerName: name of the ticket owner.
      * @Param: purchaseDate: date of purchase.

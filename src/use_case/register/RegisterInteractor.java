@@ -49,7 +49,7 @@ public class RegisterInteractor implements RegisterInputBoundary {
              try {
                   fileDataAccessObject.saveTicket(ticket);
              } catch (DuplicateNameException e) {
-                 throw new DuplicateNameException("Warning: duplicate name");
+                 throw new DuplicateNameException(e.getMessage());
              }
 
              // 4. output the Ticket
