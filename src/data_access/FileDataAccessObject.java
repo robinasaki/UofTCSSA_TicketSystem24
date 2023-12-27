@@ -8,14 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileDataAccessObject {
-    private static final String FILE_PATH = "tickets.ser";
+    private static final String FILE_PATH = "tickets.csv";
 
-    public FileDataAccessObject() {
-
-    }
-
-    // load all tickets in the dataset
     public static List<Ticket> loadTickets() {
+        /**
+         * load all tickets in set
+         */
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
             return (List<Ticket>) ois.readObject();
         } catch (FileNotFoundException e) {
@@ -26,18 +24,30 @@ public class FileDataAccessObject {
         return new ArrayList<>();
     }
 
-    // save one ticket
     public void saveTicket(Ticket ticket) throws DuplicateNameException {
+        /**
+         * save one ticket
+         */
+
         List<Ticket> ticketList = loadTickets();
         for (int i = 0; i < ticketList.size(); i++) {
             if (ticketList.get(i).getBuyerName().equals(ticket.getBuyerName())) {
                 throw new DuplicateNameException("Warning: duplicate name found.");
             }
         }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
+            // Append the new ticket in CSV format
+            writer.write(ticket.toCSV()); // Assuming you have a toCSV method in your Ticket class
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    // save several tickets
     public void saveTickets(List<Ticket> ticketList) {
+        /**
+         * save some tickets
+         */
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
             oos.writeObject(ticketList);
         } catch (IOException e) {
