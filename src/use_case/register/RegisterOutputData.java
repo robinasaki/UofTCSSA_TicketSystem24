@@ -8,4 +8,8 @@ public class RegisterOutputData {
     public RegisterOutputData(Ticket ticket) {
         this.ticket = ticket;
     }
+
+    public Ticket getTicket() {
+        return ticket;
+    }
 }

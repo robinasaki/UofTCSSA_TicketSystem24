@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileDataAccessObject {
-    private static final String FILE_PATH = "tickets.json";
+    private static final String FILE_PATH = "tickets.csv";
 
     public static List<Ticket> loadTickets() {
         /**
@@ -28,11 +28,19 @@ public class FileDataAccessObject {
         /**
          * save one ticket
          */
+
         List<Ticket> ticketList = loadTickets();
         for (int i = 0; i < ticketList.size(); i++) {
             if (ticketList.get(i).getBuyerName().equals(ticket.getBuyerName())) {
                 throw new DuplicateNameException("Warning: duplicate name found.");
             }
+        }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
+            // Append the new ticket in CSV format
+            writer.write(ticket.toCSV()); // Assuming you have a toCSV method in your Ticket class
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

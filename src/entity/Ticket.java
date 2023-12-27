@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Random;
 
@@ -23,11 +24,12 @@ public class Ticket {
         this.purchaseDate = purchaseDate;
         this.seat = seat;
         this.cell = cell;
-        // TODO: confirm the ticketID algorithm
+        // TODO: confirm ticket ID generation algorithm
         this.ticketID = "CSSA24-" + random.nextInt(9) + random.nextInt(9) + random.nextInt(9) +
                 random.nextInt(9) + (char) (random.nextInt(26) + 'A') +
                 random.nextInt(9) + (char) (random.nextInt(26) + 'A') + (char) (random.nextInt(26) + 'A') +
-                random.nextInt(9) + random.nextInt(9) + random.nextInt(9);
+                random.nextInt(9) + random.nextInt(9) + random.nextInt(9) + (char) (random.nextInt(26) + 'A') +
+                (char) (random.nextInt(26) + 'A') + (char) (random.nextInt(26) + 'A') + (char) (random.nextInt(26) + 'A');
     }
 
     public String getBuyerName() {
@@ -42,6 +44,10 @@ public class Ticket {
         return this.ticketID;
     }
 
+    public String getCell() {
+        return this.cell;
+    }
+
     public String getEmail() {
         return this.email;
     }
@@ -50,7 +56,9 @@ public class Ticket {
         return this.seat;
     }
 
-    public String getCell() {
-        return this.cell;
+    public String toCSV() {
+        // Format the fields as CSV
+        return String.format("%s,%s,%s,%s,%s,%s",
+                buyerName, email, seat, cell, purchaseDate, ticketID);
     }
 }

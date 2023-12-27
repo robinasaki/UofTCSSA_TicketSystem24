@@ -6,6 +6,7 @@ import entity.Ticket;
 import interface_adapter.register.RegisterPresenter;
 import view.RegisterView;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
@@ -36,9 +37,24 @@ public class RegisterInteractor implements RegisterInputBoundary {
 
             // 1.3: email
             // email input should follow [anything]@[anything].[anything]
-            else if (!registerInputData.getEmail().matches("^.*@.*\\..*")) {
+            else if (!registerInputData.getEmail().matches("^.+@.+\\..*")) {
                 throw new IllegalArgumentException("Incorrect email input.");
             }
+             // 2. make the data a Ticket object
+             ZoneId zoneId = ZoneId.of("America/New_York");
+             String name = registerInputData.getFirstName() + "-" + registerInputData.getLastName();
+             Ticket ticket = new Ticket(name, registerInputData.getEmail(), registerInputData.getSeat(), registerInputData.getCell(), LocalDate.now(zoneId));
+
+             // 3. save the ticket data
+             try {
+                  fileDataAccessObject.saveTicket(ticket);
+             } catch (DuplicateNameException e) {
+                 throw new DuplicateNameException("Warning: duplicate name");
+             }
+
+             // 4. output the Ticket
+             RegisterOutputData registerOutputData = new RegisterOutputData(ticket);
+             registerPresenter.prepareSuccessView(registerOutputData);
          }
          else {
             // 2. make the data a Ticket object
