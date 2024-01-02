@@ -10,7 +10,7 @@ public class Ticket implements Serializable{
      * @Param: purchaseDate: date of purchase.
      * @Param: ticketID: a randomized ticket.
      */
-    private String buyerName; // Chenxu Mao
+    private String buyerName; // chenxu-mao
     private String email; // Robin.mao@mail.utoronto.ca
     private LocalDate purchaseDate; // 2023.12.20
     private String seat; // A1

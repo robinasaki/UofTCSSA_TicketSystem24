@@ -1,12 +1,12 @@
 package use_case.register;
 
-import Exceptions.DuplicateNameException;
+import exceptions.DuplicateNameException;
 import data_access.FileDataAccessObject;
+import data_access.ServerDataAccessObject;
 import entity.Ticket;
-import interface_adapter.register.RegisterPresenter;
 import view.RegisterView;
 
-import java.io.IOException;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
@@ -48,6 +48,8 @@ public class RegisterInteractor implements RegisterInputBoundary {
              // 3. save the ticket data
              try {
                   fileDataAccessObject.saveTicket(ticket);
+                  // TODO
+                  ServerDataAccessObject.uploadCsvFile(new File("tickets.csv"));
              } catch (DuplicateNameException e) {
                  throw new DuplicateNameException(e.getMessage());
              }
@@ -65,6 +67,8 @@ public class RegisterInteractor implements RegisterInputBoundary {
             // 3. save the ticket data
             try {
                 fileDataAccessObject.saveTicket(ticket);
+                // TODO
+                ServerDataAccessObject.uploadCsvFile(new File("tickets.csv"));
             } catch (DuplicateNameException e) {
                 throw new DuplicateNameException("Warning: duplicate name");
             }

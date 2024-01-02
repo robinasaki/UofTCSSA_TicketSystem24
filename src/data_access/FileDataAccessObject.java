@@ -1,6 +1,6 @@
 package data_access;
 
-import Exceptions.DuplicateNameException;
+import exceptions.DuplicateNameException;
 import entity.Ticket;
 
 import java.io.*;
@@ -29,20 +29,6 @@ public class FileDataAccessObject {
         return ticketList;
     }
 
-//    public static List<Ticket> loadTickets() {
-//        /**
-//         * load all tickets in set
-//         */
-//        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
-//            return (List<Ticket>) ois.readObject();
-//        } catch (FileNotFoundException e) {
-//            return new ArrayList<>();
-//        } catch (IOException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        return new ArrayList<>();
-//    }
-
     public void saveTicket(Ticket ticket) throws DuplicateNameException {
         /**
          * save one ticket
@@ -57,7 +43,7 @@ public class FileDataAccessObject {
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
             // Append the new ticket in CSV format
-            writer.write(ticket.toCSV()); // Assuming you have a toCSV method in your Ticket class
+            writer.write(ticket.toCSV());
             writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();

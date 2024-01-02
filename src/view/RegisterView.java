@@ -164,4 +164,6 @@ public class RegisterView extends JPanel {
     public void setFailedView() {
         JOptionPane.showMessageDialog(panel, "Failed to add the ticket.", "Warning: failed", JOptionPane.WARNING_MESSAGE);
     }
+
+    // TODO: closest available seat method
 }
